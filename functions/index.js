@@ -1,0 +1,7 @@
+const functions = require('firebase-functions')
+const { initializeApp } = require('firebase-admin/app')
+initializeApp()
+const getSetup = require('./setup.js')
+exports.setup = functions.https.onRequest(getSetup)
+exports.AddConversationToUser = functions.runWith({ memory: '256MB', timeoutSeconds: 30 }).firestore.document('database/conversations/records/{recordId}').onCreate(require('./functions/AddConversationToUser.js'))
+exports.RunChatbot = functions.runWith({ memory: '256MB', timeoutSeconds: 120 }).firestore.document('database/conversations/records/{recordId}').onWrite(require('./functions/RunChatbot.js'))

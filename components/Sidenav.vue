@@ -1,0 +1,24 @@
+<template lang="pug">
+div(:style="{alignSelf: `stretch`, backgroundColor: `rgba(255, 255, 255, 1)`, borderColor: `rgba(222, 222, 222, 1)`, borderRadius: `8 8px 8px 8pxpx`, borderStyle: `solid`, borderWidth: `2px 2px 2px 2px`, display: `flex`, flexDirection: `column`, flexGrow: `1`, justifyContent: `space-between`}")
+  div(:style="{display: `flex`, flexDirection: `column`}")
+    div(v-for="(item, i) in user.conversations" :style="{alignItems: `flex-start`, borderColor: `rgba(0, 0, 0, 0.05)`, borderWidth: `0px 0px 1px 0px`, display: `flex`, flexDirection: `row`}")
+      NuxtLink(v-if="item.user === $auth.uid" :to="`/${item.$id}`" :style="{display: `flex`, flexDirection: `column`, flexGrow: `1`, padding: `8px 16px`}")
+        span(:style="{color: `${item.$id === conversationId ? 'rgba(34, 137, 202, 1)' : 'rgba(124, 124, 124, 1)'}`, fontFamily: `Poppins`, fontSize: `12px`, fontWeight: `${item.$id === conversationId ? 700 : 500}`}") {{moment(item.$createdAt).format('ll')}}
+        span(:style="{color: `${item.$id === conversationId ? 'rgba(34, 137, 202, 1)' : 'rgba(124, 124, 124, 1)'}`, fontFamily: `Poppins`, fontSize: `12px`, fontWeight: `${item.$id === conversationId ? 700 : 500}`}") {{moment(item.$createdAt).format('hh:mma')}}
+  div(@click="async () => { newConversation.user = $auth.uid; await newConversation.$save(); await $router.$redirect(`/${newConversation.$id}`) }" :style="{alignItems: `center`, alignSelf: `stretch`, borderColor: `rgba(0, 0, 0, 0.05)`, borderWidth: `1px 0px 0px 0px`, cursor: `pointer`, display: `flex`, flexDirection: `row`, gap: `4px`, padding: `6px 16px`}")
+    img(:alt="`Add New / 24 / Outline`" :src="`data:image/svg+xml;utf8,%3Csvg%20width%3D%2216%22%20height%3D%2217%22%20viewBox%3D%220%200%2016%2017%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Cpath%20d%3D%22M7.99998%201.83334C6.68144%201.83334%205.39251%202.22434%204.29618%202.95688C3.19985%203.68942%202.34537%204.73061%201.84079%205.94879C1.3362%207.16696%201.20418%208.50741%201.46141%209.80061C1.71865%2011.0938%202.35359%2012.2817%203.28594%2013.2141C4.21829%2014.1464%205.40617%2014.7813%206.69938%2015.0386C7.99259%2015.2958%209.33303%2015.1638%2010.5512%2014.6592C11.7694%2014.1546%2012.8106%2013.3001%2013.5431%2012.2038C14.2757%2011.1075%2014.6666%209.81855%2014.6666%208.50001C14.6666%207.62453%2014.4942%206.75762%2014.1592%205.94879C13.8241%205.13995%2013.3331%204.40502%2012.714%203.78596C12.095%203.16691%2011.36%202.67584%2010.5512%202.34081C9.74237%202.00578%208.87546%201.83334%207.99998%201.83334V1.83334ZM7.99998%2013.8333C6.94515%2013.8333%205.914%2013.5205%205.03694%2012.9345C4.15988%2012.3485%203.47629%2011.5155%203.07263%2010.541C2.66896%209.56645%202.56334%208.49409%202.76913%207.45953C2.97492%206.42496%203.48287%205.47465%204.22875%204.72877C4.97463%203.98289%205.92494%203.47494%206.9595%203.26916C7.99407%203.06337%209.06642%203.16899%2010.041%203.57265C11.0155%203.97632%2011.8485%204.65991%2012.4345%205.53697C13.0205%206.41403%2013.3333%207.44518%2013.3333%208.50001C13.3333%209.9145%2012.7714%2011.2711%2011.7712%2012.2712C10.771%2013.2714%209.41447%2013.8333%207.99998%2013.8333V13.8333ZM10.6666%207.83334H8.66665V5.83334C8.66665%205.65653%208.59641%205.48696%208.47139%205.36194C8.34636%205.23691%208.17679%205.16668%207.99998%205.16668C7.82317%205.16668%207.6536%205.23691%207.52858%205.36194C7.40355%205.48696%207.33332%205.65653%207.33332%205.83334V7.83334H5.33332C5.1565%207.83334%204.98694%207.90358%204.86191%208.02861C4.73689%208.15363%204.66665%208.3232%204.66665%208.50001C4.66665%208.67682%204.73689%208.84639%204.86191%208.97141C4.98694%209.09644%205.1565%209.16668%205.33332%209.16668H7.33332V11.1667C7.33332%2011.3435%207.40355%2011.5131%207.52858%2011.6381C7.6536%2011.7631%207.82317%2011.8333%207.99998%2011.8333C8.17679%2011.8333%208.34636%2011.7631%208.47139%2011.6381C8.59641%2011.5131%208.66665%2011.3435%208.66665%2011.1667V9.16668H10.6666C10.8435%209.16668%2011.013%209.09644%2011.1381%208.97141C11.2631%208.84639%2011.3333%208.67682%2011.3333%208.50001C11.3333%208.3232%2011.2631%208.15363%2011.1381%208.02861C11.013%207.90358%2010.8435%207.83334%2010.6666%207.83334Z%22%20fill%3D%22%232289CA%22%2F%3E%0A%3C%2Fsvg%3E%0A`" :style="{height: `16px`, width: `16px`}")
+    span(:style="{color: `rgba(34, 137, 202, 1)`, fontFamily: `Poppins`, fontSize: `14px`, fontWeight: `500`}") New conversation</template>
+<script setup>
+const props = defineProps(['conversationId'])
+import _ from 'lodash'
+import moment from 'moment'
+import { useRoute } from '#app'
+import useAuth from '@/webcat/useAuth.js'
+import useWcRouter from '@/webcat/useRouter.js'
+import useRecord from '@/webcat/useRecord.js'
+const $auth = useAuth()
+const $router = useWcRouter(useRouter())
+const newConversation = useRecord({ tableId: 'conversations', expand: [] })
+const user = useRecord({ tableId: 'wc-users', recordId: computed(() => $auth.uid), expand: ['conversations'] })
+
+</script>
